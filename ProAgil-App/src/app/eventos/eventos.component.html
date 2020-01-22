@@ -1,14 +1,57 @@
-<div *ngFor="let evento of eventos">
-  
-  
-  Tema: {{evento.tema}}
-  <br>
-  Local: {{evento.local}}
-  <br>
-  Data: {{evento.dataEvento}}
-  <br>
-  Qtd: {{evento.qtdPessoas}}
-
-  <hr>
-
+<br>
+<div class="form-inline">
+  <div class="form-group mb-2">
+    <label class="mr-2">Filtro: </label><input type="text" class="form-control mr-2" placeholder="buscar"
+    [(ngModel)]="filtroLista"
+    >
+  </div>
 </div>
+<h3>Filtro: {{filtroLista}}</h3>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th><button class="btn btn-outline-primary"
+        (click)="alternarImagem()">
+        Mostrar imagem
+      </button></th>
+      <th>#</th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Nº de Pessoas</th>
+      <th>Lote</th>
+      <th>Opções</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor="let evento of eventosFiltrados">
+      <td>
+        <img *ngIf="mostrarImage"
+        src="http://localhost:5000/Img/{{evento.urlImage}}"
+        [style.width.px]="imageWidth"
+        [style.margin.px]="imageMargin"
+        [style.height.px]="imageHeight">
+     </td>
+      <td>{{evento.eventoId}}</td>
+      <td>{{evento.tema}}</td>
+      <td>{{evento.local}}</td>
+      <td>{{evento.dataEvento}}</td>
+      <td>{{evento.qtdPessoas}}</td>
+      <td>{{evento.lote | uppercase}}</td>
+      <td>
+        <button class="btn btn-outline-success">Entrar</button>
+        
+        <button class="btn btn-outline-danger">Sair</button>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos.length">
+    <tr>
+      <td colspan="7" class="text-center">
+        <h4>
+          Eventos esgotados
+        </h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
